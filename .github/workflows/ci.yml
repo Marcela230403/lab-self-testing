@@ -1,0 +1,25 @@
+name: Pipeline de CI - Self-Testing
+
+# Quando este pipeline deve rodar?
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+# O que ele deve fazer?
+jobs:
+  build-e-testes:
+    runs-on: ubuntu-latest # Cria um servidor Linux virtual
+    
+    steps:
+    - name: 1. Baixar o código do repositório
+      uses: actions/checkout@v3
+      
+    - name: 2. Instalar e configurar o Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+        
+    - name: 3. Executar os testes automatizados (Self-Testing)
+      run: python -m unittest test_calculadora.py
